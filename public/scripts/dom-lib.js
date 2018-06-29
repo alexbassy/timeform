@@ -15,9 +15,7 @@ export function insertSpinner (target) {
     position: 'relative'
   }
 
-  const spinner = new Spinner(opts).spin(target)
-
-  return spinner
+  return new Spinner(opts).spin(target)
 }
 
 export function freezeElementWidthAndHeight (elem) {
@@ -25,4 +23,8 @@ export function freezeElementWidthAndHeight (elem) {
   const height = elem.offsetHeight
   elem.style.width = width + 'px'
   elem.style.height = height + 'px'
+}
+
+export function setTextContent (elem, content) {
+  elem.textContent = content
 }
