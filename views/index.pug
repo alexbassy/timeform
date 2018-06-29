@@ -1,5 +1,10 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+
+  .step
+    h4.title 1. Login to your account to select a form
+    button.btn.js-authenticate-btn Connect with Typeform
+
+  .step.disabled
+    h4.title 2. Create a schedule
