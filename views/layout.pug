@@ -2,14 +2,14 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='/styles/normalize.min.css')
-    link(rel='stylesheet', href='/styles/font.css')
-    link(rel='stylesheet', href='/styles/spin.css')
-    link(rel='stylesheet', href='/styles/style.css')
+    link(rel='stylesheet', href='/normalize.min.css')
+    link(rel='stylesheet', href='/font.css')
+    link(rel='stylesheet', href='/spin.css')
+    link(rel='stylesheet', href='/style.css')
   body
     include header
     .container.page-content
       block content
 
     script(src='//cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js')
-    script(src='/scripts/main.js' type='module')
+    script(src='/main.js')
