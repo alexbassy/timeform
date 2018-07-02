@@ -22,7 +22,7 @@ const onAuthButtonClick = async ev => {
   if (token) {
     spinner.stop()
     dom.setTextContent(button, 'Done!')
-    button.classList.add('')
+    button.classList.add('greyed-out')
   }
 }
 authButton.addEventListener('click', onAuthButtonClick)

@@ -1,11 +1,17 @@
 const API_BASE = 'https://api.typeform.com'
 
-export function hasToken () {
+export function getToken () {
   return localStorage.getItem('token')
 }
 
+function getAuthHeaders () {
+  return {
+    Authorization: `bearer ${getToken()}`
+  }
+}
+
 export function isAuthenticated () {
-  return !!hasToken()
+  return !!getToken()
 }
 
 export function getAuthorisationURL () {
@@ -25,7 +31,7 @@ export async function openOAuthWindow () {
       const token = message.data
       oauthWindow.close()
       oauthWindow = null
-      localStorage.setItem('typeformToken', token)
+      localStorage.setItem('token', token)
       resolve(token)
     })
   })
