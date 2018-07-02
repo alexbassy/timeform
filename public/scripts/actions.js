@@ -1,5 +1,5 @@
 import * as dom from './dom-lib.js'
-import { openOAuthWindow } from './api-lib.js'
+import { openOAuthWindow, getForms } from './api-lib.js'
 
 const steps = document.querySelectorAll('.step')
 

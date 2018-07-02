@@ -4,6 +4,13 @@ export function getToken () {
   return localStorage.getItem('token')
 }
 
+function fetchAuthenticated (url, options = {}) {
+  const defaultHeaders = options.headers || {}
+  return fetch(url, Object.assign({}, options, {
+    headers: Object.assign({}, defaultHeaders, getAuthHeaders())
+  }))
+}
+
 function getAuthHeaders () {
   return {
     Authorization: `bearer ${getToken()}`
@@ -35,4 +42,9 @@ export async function openOAuthWindow () {
       resolve(token)
     })
   })
+}
+
+export async function getForms () {
+  const request = fetchAuthenticated('/forms').then(res => res.json())
+  return request
 }

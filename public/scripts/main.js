@@ -1,6 +1,9 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
 import * as dom from './dom-lib.js'
 import * as api from './api-lib.js'
 import * as actions from './actions.js'
+import Scheduler from './Scheduler.jsx'
 
 const hasToken = api.isAuthenticated()
 
@@ -12,4 +15,9 @@ if (!hasToken) {
 } else {
   dom.setStepState(steps[0], 'completed')
   dom.setStepState(steps[1], 'active')
+
+  ReactDOM.render(
+    <Scheduler />,
+    document.querySelector('.js-scheduler')
+  )
 }
