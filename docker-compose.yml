@@ -16,6 +16,7 @@ services:
       TF_CLIENT_SECRET: ${TF_CLIENT_SECRET}
       SECRET: ${SECRET}
     ports:
+      - "46140:46140"
       - "3000:3000"
     links:
       - mongo

@@ -17,7 +17,8 @@ app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'public', 'styles')))
+app.use(express.static(path.join(__dirname, 'public', 'dist')))
 
 app.use(async (req, res, next) => {
   const authHeader = req.headers.authorization
