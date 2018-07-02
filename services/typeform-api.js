@@ -11,18 +11,27 @@ async function getOauthToken (code) {
       redirect_uri: `${BASE_URL}/oauth-callback`,
       code: code
     }
-    const token = await got.post(`${TF_BASE_URL}/oauth/token`, {
+    return await got.post(`${TF_BASE_URL}/oauth/token`, {
       json: true,
       form: true,
       body
-    })
-    return token
+    }).then(response => response.body)
   } catch (e) {
     console.log(e)
   }
 }
 
+async function getAccountInfo (options) {
+  return await got(`${TF_BASE_URL}/me`, {
+    json: true,
+    headers: {
+      Authorization: `bearer ${options.token}`
+    }
+  }).then(response => response.body)
+}
+
 module.exports = {
   TF_BASE_URL,
-  getOauthToken
+  getOauthToken,
+  getAccountInfo
 }
