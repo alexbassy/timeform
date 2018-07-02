@@ -1,3 +1,34 @@
+export function hideElement (elem) {
+  if (!elem) return
+  elem.setAttribute('hidden', true)
+  elem.setAttribute('aria-hidden', true)
+}
+
+export function showElement (elem) {
+  if (!elem) return
+  elem.removeAttribute('hidden')
+  elem.removeAttribute('aria-hidden')
+}
+
+export function setStepState (step, state) {
+  switch (state) {
+    case 'active':
+      step.classList.remove('disabled', 'completed')
+      showElement(step.querySelector('.step-content'))
+      return
+
+    case 'disabled':
+      step.classList.add('disabled')
+      hideElement(step.querySelector('.step-content'))
+      return
+
+    case 'completed':
+      step.classList.add('completed')
+      hideElement(step.querySelector('.step-content'))
+      return
+  }
+}
+
 export function insertSpinner (target) {
   const opts = {
     lines: 9,

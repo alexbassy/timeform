@@ -14,7 +14,14 @@ body {
   background-color: #f5f5f5;
 }
 
+
 /* GENERIC */
+
+[hidden],
+[aria-hidden="true"]{
+  display: none;
+}
+
 .container {
   max-width: 900px;
   padding: 0 50px;
@@ -66,10 +73,6 @@ body {
   right: 24px;
   top: 50%;
   transform: translateY(-50%);
-}
-
-.step.completed .step-content {
-  display: none;
 }
 
 .step-title {

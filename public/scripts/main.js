@@ -1,28 +1,15 @@
 import * as dom from './dom-lib.js'
 import * as api from './api-lib.js'
+import * as actions from './actions.js'
+
+const hasToken = api.isAuthenticated()
 
 const authButton = document.querySelector('.js-authenticate-btn')
-const onAuthButtonClick = async ev => {
-  const button = ev.target
-  const { isLoading } = button.dataset
+const steps = document.querySelectorAll('.step')
 
-  if (isLoading) {
-    return false
-  }
-
-  button.dataset.isLoading = true
-
-  dom.freezeElementWidthAndHeight(button)
-  dom.setTextContent(button, '')
-  button.disabled = true
-  const spinner = dom.insertSpinner(button)
-
-  const token = await api.openOAuthWindow()
-
-  if (token) {
-    spinner.stop()
-    dom.setTextContent(button, 'Done!')
-    button.classList.add('greyed-out')
-  }
+if (!hasToken) {
+  authButton.addEventListener('click', actions.onAuthButtonClick)
+} else {
+  dom.setStepState(steps[0], 'completed')
+  dom.setStepState(steps[1], 'active')
 }
-authButton.addEventListener('click', onAuthButtonClick)
