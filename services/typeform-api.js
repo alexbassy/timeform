@@ -30,8 +30,60 @@ async function getAccountInfo (options) {
   }).then(response => response.body)
 }
 
+async function getForms (options) {
+  return await got(`${TF_BASE_URL}/forms`, {
+    json: true,
+    headers: {
+      Authorization: `bearer ${options.token}`
+    }
+  }).then(response => response.body)
+}
+
+async function getForm (id, options) {
+  return await got(`${TF_BASE_URL}/forms/${id}`, {
+    json: true,
+    headers: {
+      Authorization: `bearer ${options.token}`
+    }
+  }).then(response => response.body)
+}
+
+async function updateForm (id, options) {
+  return await got(`${TF_BASE_URL}/forms/${id}`, {
+    json: true,
+    headers: {
+      Authorization: `bearer ${options.token}`
+    }
+  }).then(response => response.body)
+}
+
+async function changeFormPublicState (id, isPublic, options) {
+  if (typeof isPublic === 'undefined') {
+    return console.warn(`changeFormPublicState: isPublic field was omitted, will not fulfill request`)
+  }
+
+  return await got(`${TF_BASE_URL}/forms/${id}`, {
+    method: 'patch',
+    json: true,
+    headers: {
+      Authorization: `bearer ${options.token}`
+    },
+    body: [
+      {
+        op: `replace`,
+        path: `/settings/is_public`,
+        value: isPublic
+      }
+    ]
+  })
+}
+
 module.exports = {
   TF_BASE_URL,
   getOauthToken,
-  getAccountInfo
+  getAccountInfo,
+  getForms,
+  getForm,
+  updateForm,
+  changeFormPublicState
 }

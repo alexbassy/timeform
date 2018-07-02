@@ -6,6 +6,7 @@ const logger = require('morgan')
 const jwt = require('./lib/jwt')
 
 const indexRouter = require('./routes/index')
+const formsRouter = require('./routes/forms')
 
 const app = express()
 
@@ -36,6 +37,7 @@ app.use(async (req, res, next) => {
 })
 
 app.use('/', indexRouter)
+app.use('/forms', formsRouter)
 
 app.use((req, res, next) => {
   next(createError(404))
