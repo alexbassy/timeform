@@ -3,6 +3,7 @@ const express = require('express')
 const path = require('path')
 const cookieParser = require('cookie-parser')
 const logger = require('morgan')
+const jwt = require('./lib/jwt')
 
 const indexRouter = require('./routes/index')
 
@@ -16,6 +17,23 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
+
+app.use(async (req, res, next) => {
+  const authHeader = req.headers.authorization
+
+  if (!authHeader) {
+    return next()
+  }
+
+  const user = await jwt.readHeader(authHeader)
+
+  if (!user) {
+    return res.status(400).json({ message: 'Invalid token' })
+  }
+
+  req.user = user
+  return next()
+})
 
 app.use('/', indexRouter)
 
