@@ -1,3 +1,7 @@
+:root {
+  --schedulerBorderColor: #eee;
+}
+
 *, *:before, *:after {
   box-sizing: border-box;
 }
@@ -83,6 +87,11 @@ body {
   font-size: 16px;
   color: #999;
   line-height: 24px;
+}
+
+/* SCHEDULER */
+.scheduler {
+
 }
 
 /* SPECIFIC */
