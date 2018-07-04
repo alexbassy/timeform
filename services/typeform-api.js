@@ -32,6 +32,9 @@ async function getAccountInfo (options) {
 
 async function getForms (options) {
   return await got(`${TF_BASE_URL}/forms`, {
+    query: {
+      page_size: 50
+    },
     json: true,
     headers: {
       Authorization: `bearer ${options.token}`
