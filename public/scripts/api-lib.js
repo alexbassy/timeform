@@ -48,3 +48,15 @@ export async function getForms () {
   const request = fetchAuthenticated('/forms').then(res => res.json())
   return request
 }
+
+export async function saveRule (id, body) {
+  const request = fetchAuthenticated(`/forms/rule/${id}`, {
+    method: 'POST',
+    headers: {
+      'Accepts': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(body)
+  }).then(res => res.json())
+  return request
+}
