@@ -43,8 +43,8 @@ export function setStepState (step, state) {
   }
 }
 
-export function insertSpinner (target) {
-  const opts = {
+export function insertSpinner (target, options) {
+  const opts = Object.assign({
     lines: 9,
     length: 5,
     width: 3,
@@ -58,7 +58,7 @@ export function insertSpinner (target) {
     className: 'spinner',
     shadow: '',
     position: 'relative'
-  }
+  }, options)
 
   return new Spin(opts).spin(target)
 }
