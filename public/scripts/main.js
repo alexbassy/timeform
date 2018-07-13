@@ -5,6 +5,10 @@ import * as api from './api-lib.js'
 import * as actions from './actions.js'
 import Scheduler from './Scheduler.jsx'
 
+import 'normalize.css'
+import '../styles/font.css'
+import '../styles/style.css'
+
 const hasToken = api.isAuthenticated()
 
 const authButton = document.querySelector('.js-authenticate-btn')
