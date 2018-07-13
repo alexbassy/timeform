@@ -1,5 +1,6 @@
 :root {
   --schedulerBorderColor: #eee;
+  --activeColour: #4399fa;
 }
 
 *, *:before, *:after {
@@ -16,6 +17,7 @@ body {
   height: 100%;
   font: 18px "GT America web", -apple-system, BlinkMacSystemFont, sans-serif;
   background-color: #f5f5f5;
+  color: #333;
 }
 
 
@@ -49,6 +51,40 @@ body {
 
 .btn.greyed-out {
   filter: grayscale(1);
+}
+
+input[type="text"] {
+  font-size: 16px;
+  padding: 8px 32px 8px 12px;
+  border: none;
+  box-shadow: 0 0 0 1px #aaa;
+  border-radius: 3px;
+  -webkit-appearance: none;
+  user-select: none;
+  transition: box-shadow .15s ease;
+}
+
+select {
+  font-size: 16px;
+  padding: 8px 32px 8px 12px;
+  background: no-repeat center right 8px/20px url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="768" height="768" viewBox="0 0 768 768"><g/><path d="M223.5 319.5h321L384 480z" fill="#555"/></svg>');
+  border: none;
+  box-shadow: 0 0 0 1px #aaa;
+  border-radius: 3px;
+  -webkit-appearance: none;
+  user-select: none;
+  transition: box-shadow .15s ease;
+}
+
+input[type="text"][disabled],
+select[disabled] {
+  background-color: #fafafa;
+}
+
+input[type="text"]:focus,
+select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--activeColour);
 }
 
 /* STEPS */
@@ -115,4 +151,9 @@ header .subtitle {
   margin: 8px 0 0;
   font-weight: 500;
   color: #ffffffaa;
+}
+
+/* Fix datepicker */
+.react-datepicker__time-list {
+  padding-left: 0
 }
