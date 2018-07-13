@@ -1,3 +1,10 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+import Scheduler from './Scheduler.jsx'
+import Spin from 'spin'
+
+const steps = document.querySelectorAll('.step')
+
 export function hideElement (elem) {
   if (!elem) return
   elem.setAttribute('hidden', true)
@@ -11,20 +18,27 @@ export function showElement (elem) {
 }
 
 export function setStepState (step, state) {
+  const stepElem = steps[step]
   switch (state) {
     case 'active':
-      step.classList.remove('disabled', 'completed')
-      showElement(step.querySelector('.step-content'))
+      stepElem.classList.remove('disabled', 'completed')
+      showElement(stepElem.querySelector('.step-content'))
+      if (step === 1) {
+        ReactDOM.render(
+          <Scheduler />,
+          document.querySelector('.js-scheduler')
+        )
+      }
       return
 
     case 'disabled':
-      step.classList.add('disabled')
-      hideElement(step.querySelector('.step-content'))
+      stepElem.classList.add('disabled')
+      hideElement(stepElem.querySelector('.step-content'))
       return
 
     case 'completed':
-      step.classList.add('completed')
-      hideElement(step.querySelector('.step-content'))
+      stepElem.classList.add('completed')
+      hideElement(stepElem.querySelector('.step-content'))
       return
   }
 }
@@ -46,7 +60,7 @@ export function insertSpinner (target) {
     position: 'relative'
   }
 
-  return new Spinner(opts).spin(target)
+  return new Spin(opts).spin(target)
 }
 
 export function freezeElementWidthAndHeight (elem) {

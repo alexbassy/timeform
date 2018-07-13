@@ -28,16 +28,12 @@ router.get('/oauth-callback', async (req, res) => {
   const typeformAccount = await getAccountInfo({ token })
   const email = typeformAccount.email
 
-  console.log('typeformAccount:', typeformAccount)
-
   const account = await Account.findOneAndUpdate({ email: encrypt(email) }, { token }, {
     lean: true,
     new: true,
     upsert: true,
     fields: '_id email token'
   }).exec()
-
-  console.log('createdAccount:', account)
 
   const webToken = jwt.create(account)
 

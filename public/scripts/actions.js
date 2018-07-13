@@ -1,8 +1,6 @@
 import * as dom from './dom-lib.js'
 import { openOAuthWindow, getForms } from './api-lib.js'
 
-const steps = document.querySelectorAll('.step')
-
 export const onAuthButtonClick = async ev => {
   const button = ev.target
   const { isLoading } = button.dataset
@@ -22,7 +20,7 @@ export const onAuthButtonClick = async ev => {
 
   if (token) {
     spinner.stop()
-    dom.setStepState(steps[0], 'completed')
-    dom.setStepState(steps[1], 'disabled')
+    dom.setStepState(0, 'completed')
+    dom.setStepState(1, 'active')
   }
 }
