@@ -55,9 +55,8 @@ body {
 .step {
   position: relative;
   background: #fff;
-  padding: 24px;
   border-radius: 5px;
-  margin-top: 32px;
+  margin: 32px 0;
   box-shadow: 0 4px 10px rgba(0,0,0,.05);
 }
 
@@ -79,8 +78,12 @@ body {
   transform: translateY(-50%);
 }
 
+.step.completed .step-title {
+  padding: 24px;
+}
+
 .step-title {
-  margin: 0;
+  padding: 24px;
 }
 
 .step-description {
@@ -89,9 +92,12 @@ body {
   line-height: 24px;
 }
 
-/* SCHEDULER */
-.scheduler {
+.step-content {
+  margin-top: -24px;
+}
 
+.step-content.padded {
+  padding: 0 24px 24px;
 }
 
 /* SPECIFIC */
