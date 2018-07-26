@@ -2,18 +2,18 @@ import React, { Component } from 'react'
 import styled from 'react-emotion'
 import moment from 'moment'
 import DatePicker, { DATE_TIME_FORMAT } from './DatePicker'
+import { Label, Select, Button } from './FormElements'
 import { saveRule } from './api-lib'
 
-
 const FormGroupWrap = styled('div')`
+  display: flex;
   margin-bottom: 16px;
+  align-items: baseline;
+  border-bottom: 2px dotted #ddd;
 `
 
-const Label = styled('label')`
-  display: block;
-  margin-bottom: 8px;
-  font-size: 16px;
-  font-weight: 500;
+const FormInputWrap = styled('div')`
+  margin-left: auto;
 `
 
 const ScheduleView = styled('div')`
@@ -21,12 +21,30 @@ const ScheduleView = styled('div')`
   padding: 0 16px;
 `
 
+const Preview = styled('div')`
+  display: flex;
+  align-items: center;
+  padding: 0 160px 24px 0;
+  font-size: 22px;
+  line-height: 33px;
+  font-weight: 300;
+  color: #666;
+  height: 150px;
+  
+  strong {
+    font-weight: 500;
+    color: #333;
+  }
+`
+
 const FormGroup = ({ title, description, children }) => {
   return (
     <FormGroupWrap>
       {title ? <Label>{title}</Label> : null}
       {description ? <Label>{description}</Label> : null}
-      {children}
+      <FormInputWrap>
+        {children}
+      </FormInputWrap>
     </FormGroupWrap>
   )
 }
@@ -42,8 +60,8 @@ class Scheduler extends Component {
     this.state = {
       startDate: moment(),
       endDate: moment().add(1, 'day'),
-      condition: null,
-      frequency: null
+      condition: 'private',
+      frequency: 'weekly'
     }
   }
 
@@ -56,7 +74,7 @@ class Scheduler extends Component {
 
     this.setState({
       startDate: moment(form.rule.begin),
-      endDate: form.rule.end ? moment(form.rule.end) : moment().add(1, 'day'),
+      endDate: moment(form.rule.end),
       condition: form.rule.condition,
       frequency: form.rule.recurring
     })
@@ -102,24 +120,24 @@ class Scheduler extends Component {
         <form onSubmit={this.handleSubmit}>
           <h3>{form.title}</h3>
           <FormGroup title='Condition'>
-            <select
+            <Select
               name='condition'
               onChange={this.changeCondition}
-              defaultValue={form.rule.condition}
+              defaultValue={this.state.condition}
             >
               <option value='private'>Make private</option>
               <option value='public'>Make public</option>
-            </select>
+            </Select>
           </FormGroup>
           <FormGroup title='Frequency'>
-            <select
+            <Select
               name='recurring'
               disabled
-              defaultValue={form.rule.frequency}
+              defaultValue={this.state.frequency}
               onChange={this.changeFrequency}
             >
               <option value='weekly'>Weekly</option>
-            </select>
+            </Select>
           </FormGroup>
           <FormGroup title='Start time'>
             <DatePicker
@@ -133,12 +151,16 @@ class Scheduler extends Component {
               onChange={this.handleEndDateChange}
             />
           </FormGroup>
-          <FormGroup title='Preview'>
-            <strong>{form.title}</strong> will be set
-            to <strong>{this.state.condition}</strong> every <strong>{this.state.startDate.format(DATE_TIME_FORMAT)}</strong> and
-            made <strong>{this.state.condition === 'public' ? 'private' : 'public'}</strong> on <strong>{this.state.endDate.format(DATE_TIME_FORMAT)}</strong>
-          </FormGroup>
-          <button type='submit'>Save</button>
+          <Preview>
+            <div>
+              <strong>{form.title}</strong> will be set
+              to <strong>{this.state.condition}</strong> on <strong>{this.state.startDate.format(DATE_TIME_FORMAT)}</strong> and
+              made <strong>{this.state.condition === 'public' ? 'private' : 'public'}</strong> on <strong>{this.state.endDate.format(DATE_TIME_FORMAT)}</strong>
+            </div>
+          </Preview>
+          <Button type='submit'>
+            👌 Save changes
+          </Button>
         </form>
       </ScheduleView>
     )

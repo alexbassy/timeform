@@ -1,20 +1,11 @@
 import React, { PureComponent } from 'react'
 import styled from 'react-emotion'
 import ReactDatePicker from 'react-datepicker'
+import { Input, PlainInput } from './FormElements'
 
 import 'react-datepicker/dist/react-datepicker.css'
 
 export const DATE_TIME_FORMAT = 'dddd[s at] HH:mm'
-
-const Icon = styled('img')`
-  width: 32px;
-  height: 32px;
-  vertical-align: middle;
-`
-
-const DatePickerInput = styled('input')`
-  
-`
 
 class DatePickerInputComponent extends PureComponent {
   onFocus (ev) {
@@ -22,18 +13,15 @@ class DatePickerInputComponent extends PureComponent {
   }
 
   render () {
-    console.log(this.props.value)
     return (
-      <div>
-        <Icon src={require('../images/cal.svg')} alt='' />
-        <DatePickerInput
-          type='text'
-          onFocus={this.onFocus}
-          onClick={this.props.onClick}
-          value={this.props.value}
-          readOnly
-        />
-      </div>
+      <Input
+        type='text'
+        textAlign='right'
+        onFocus={this.onFocus}
+        onClick={this.props.onClick}
+        value={this.props.value}
+        readOnly
+      />
     )
   }
 }
@@ -50,6 +38,7 @@ const DatePicker = (props) => {
       timeIntervals={10}
       dateFormat={DATE_TIME_FORMAT}
       timeCaption='time'
+      popperPlacement='auto'
     />
   )
 }

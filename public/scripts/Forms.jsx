@@ -1,9 +1,6 @@
-import React, { Component } from 'react'
+import React from 'react'
 import styled from 'react-emotion'
-import moment from 'moment'
-import DatePicker from 'react-datepicker'
 import WithForms from './WithForms'
-import { saveRule } from './api-lib'
 
 import 'react-datepicker/dist/react-datepicker.css'
 

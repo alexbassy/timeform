@@ -23,10 +23,7 @@ router.get('/', async (req, res) => {
 
   const formsWithRules = formsWithFlattenedFields.map(form => {
     const matching = rules.find(rule => rule.formId === form.id)
-    if (matching) {
-      console.log(matching)
-    }
-    return Object.assign({}, form, { rule: matching || {} })
+    return Object.assign({}, form, { rule: matching || null })
   })
 
   return res.json({
