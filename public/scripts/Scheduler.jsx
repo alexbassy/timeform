@@ -280,9 +280,6 @@ class Scheduler extends Component {
               </FormsListWrap>
               <Schedule form={this.state.selectedForm} />
             </Container>
-            <Footer>
-              {forms.count} forms
-            </Footer>
           </div>
         )}
       </WithForms>

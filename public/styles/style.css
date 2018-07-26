@@ -23,15 +23,18 @@ body {
 
 /* GENERIC */
 
+#root,
+.page-content {
+  height: 100%;
+}
+
 [hidden],
 [aria-hidden="true"]{
   display: none;
 }
 
 .container {
-  max-width: 900px;
-  padding: 0 50px;
-  margin: 0 auto;
+  display: flex;
 }
 
 .btn {
@@ -89,11 +92,11 @@ select:focus {
 
 /* STEPS */
 .step {
+  display: flex;
+  flex-direction: column;
   position: relative;
   background: #fff;
-  border-radius: 5px;
-  margin: 32px 0;
-  box-shadow: 0 4px 10px rgba(0,0,0,.05);
+  box-shadow: -1px 0 rgba(0,0,0,.05);
 }
 
 .step.disabled {
@@ -114,22 +117,20 @@ select:focus {
   transform: translateY(-50%);
 }
 
-.step.completed .step-title {
-  padding: 24px;
-}
-
 .step-title {
-  padding: 24px;
+  margin: 24px;
 }
 
 .step-description {
-  font-size: 16px;
+  font-size: 14px;
   color: #999;
-  line-height: 24px;
+  line-height: 20px;
 }
 
 .step-content {
-  margin-top: -24px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .step-content.padded {
@@ -138,9 +139,11 @@ select:focus {
 
 /* SPECIFIC */
 header {
-  background-color: #333;
-  padding: 80px 0 20px;
-  color: #fff;
+  padding: 40px 24px 20px;
+}
+
+.step-1 {
+  max-width: 300px;
 }
 
 header .title {
@@ -150,7 +153,6 @@ header .title {
 header .subtitle {
   margin: 8px 0 0;
   font-weight: 500;
-  color: #ffffffaa;
 }
 
 /* Fix datepicker */

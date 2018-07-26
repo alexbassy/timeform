@@ -28,14 +28,17 @@ class App extends Component {
           </header>
           <Authenticate onComplete={this.getAuthState} />
         </section>
-        <section className='step step-2 disabled'>
-          <h3 className='step-title'>
-            🗓 Manage schedules
-          </h3>
-          <div className='step-content'>
-            {this.state.isAuthenticated ? <Forms /> : null}
-          </div>
-        </section>
+        {this.state.isAuthenticated
+          ?
+          <section className='step step-2'>
+            <h3 className='step-title'>
+              🗓 Manage schedules
+            </h3>
+            <div className='step-content'>
+              <Forms />
+            </div>
+          </section>
+          : null}
       </div>
     )
   }
