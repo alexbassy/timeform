@@ -8,7 +8,7 @@ const { encrypt, matches } = require('../lib/encrypt')
 
 router.get('/', async (req, res, next) => {
   res.render('index', {
-    title: 'Timeform'
+    title: '⏰ Timeform'
   })
 })
 
