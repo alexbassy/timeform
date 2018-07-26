@@ -93,10 +93,12 @@ select:focus {
 /* STEPS */
 .step {
   display: flex;
+  width: 340px;
+  min-width: 340px;
   flex-direction: column;
   position: relative;
   background: #fff;
-  box-shadow: -1px 0 rgba(0,0,0,.05);
+  border-right: 1px solid #00000010;
 }
 
 .step.disabled {
@@ -125,6 +127,7 @@ select:focus {
   font-size: 14px;
   color: #999;
   line-height: 20px;
+  margin-top: -16px;
 }
 
 .step-content {
@@ -139,11 +142,7 @@ select:focus {
 
 /* SPECIFIC */
 header {
-  padding: 40px 24px 20px;
-}
-
-.step-1 {
-  max-width: 300px;
+  padding: 24px;
 }
 
 header .title {

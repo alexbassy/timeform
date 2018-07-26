@@ -16,7 +16,7 @@ const Container = styled('div')`
   display: flex;
   flex: 1;
   border-top: 1px solid #eee;
-  width: 400px;
+  width: 340px;
 `
 
 const FormsList = styled('ul')`
@@ -30,8 +30,8 @@ const FormsList = styled('ul')`
 
 const FormItemWrap = styled('li')`
   padding: 12px;
-  border-bottom: 1px solid var(--schedulerBorderColor);
-  background: ${props => props.isSelected ? 'var(--activeColour)' : '#fff'};
+  box-shadow: 0 1px #00000010;
+  background: ${props => props.isSelected ? 'var(--activeColour)' : 'none'};
   color: ${props => props.isSelected ? '#fff' : '#444'};
   user-select: none;
   
@@ -85,34 +85,25 @@ const FormItem = ({ form, onClick, isSelected }) => {
   )
 }
 
-class Forms extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      selectedForm: null
-    }
-  }
-
-  render () {
-    return (
+const Forms = ({ selectedForm, onSelect }) => {
+  return (
+    <Container>
       <WithForms>
         {forms => (
-          <Container>
-            <FormsList>
-              {forms.items.map(form => (
-                <FormItem
-                  key={form.id}
-                  form={form}
-                  isSelected={this.state.selectedForm && this.state.selectedForm.id === form.id}
-                  onClick={() => this.setState({ selectedForm: form })}
-                />
-              ))}
-            </FormsList>
-          </Container>
+          <FormsList>
+            {forms.items.map(form => (
+              <FormItem
+                key={form.id}
+                form={form}
+                isSelected={selectedForm && selectedForm.id === form.id}
+                onClick={() => onSelect(form)}
+              />
+            ))}
+          </FormsList>
         )}
       </WithForms>
-    )
-  }
+    </Container>
+  )
 }
 
 export default Forms

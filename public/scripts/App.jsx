@@ -1,9 +1,18 @@
 import React, { Component } from 'react'
 import * as api from './api-lib'
 import Authenticate from './Authenticate'
+import Scheduler from './Scheduler'
 import Forms from './Forms'
 
 class App extends Component {
+  constructor (props) {
+    super(props)
+    this.onFormSelect = this.onFormSelect.bind(this)
+    this.state = {
+      selectedForm: null
+    }
+  }
+
   componentWillMount () {
     this.getAuthState()
   }
@@ -12,6 +21,10 @@ class App extends Component {
     this.setState({
       isAuthenticated: api.isAuthenticated()
     })
+  }
+
+  onFormSelect (form) {
+    this.setState({ selectedForm: form })
   }
 
   render () {
@@ -26,7 +39,10 @@ class App extends Component {
               Automatically make your forms private, when you decide
             </div>
           </header>
-          <Authenticate onComplete={this.getAuthState} />
+          <Authenticate
+            onComplete={this.getAuthState}
+            isAuthenticated={this.state.isAuthenticated}
+          />
         </section>
         {this.state.isAuthenticated
           ?
@@ -35,9 +51,15 @@ class App extends Component {
               🗓 Manage schedules
             </h3>
             <div className='step-content'>
-              <Forms />
+              <Forms
+                onSelect={this.onFormSelect}
+                selectedForm={this.state.selectedForm}
+              />
             </div>
           </section>
+          : null}
+        {this.state.selectedForm
+          ? <Scheduler form={this.state.selectedForm} />
           : null}
       </div>
     )
