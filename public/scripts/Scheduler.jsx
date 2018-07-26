@@ -34,6 +34,7 @@ const Label = styled('label')`
 const FormsListWrap = styled('div')`
   flex: 1;
   max-width: 300px;
+  border-right: 1px solid var(--schedulerBorderColor);
 `
 
 const FormsList = styled('ul')`
@@ -114,7 +115,6 @@ const FormItem = ({ form, onClick, isSelected }) => {
 
 const ScheduleView = styled('div')`
   flex: 1;
-  border-left: 1px solid var(--schedulerBorderColor);
   padding: 0 16px;
 `
 
@@ -136,10 +136,20 @@ class Schedule extends Component {
     this.changeCondition = this.changeCondition.bind(this)
     this.changeFrequency = this.changeFrequency.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.state = {
+      startDate: moment(),
+      endDate: moment().add(1, 'day'),
+      condition: null,
+      frequency: null
+    }
   }
 
   componentWillMount () {
-    const form = this.props.form || {}
+    const form = this.props.form
+
+    if (!form || !form.rule) {
+      return
+    }
 
     this.setState({
       startDate: moment(form.rule.begin),
@@ -268,7 +278,7 @@ class Scheduler extends Component {
                   ))}
                 </FormsList>
               </FormsListWrap>
-              {this.state.selectedForm && <Schedule form={this.state.selectedForm} />}
+              <Schedule form={this.state.selectedForm} />
             </Container>
             <Footer>
               {forms.count} forms
