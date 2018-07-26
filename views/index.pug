@@ -5,21 +5,6 @@ html
     link(rel='stylesheet', href='/spin.css')
     link(rel='stylesheet', href='/main.css')
   body
-    .container.page-content
-      div#root
-      section.step.step-1
-        header.header
-          h1.title= title
-          .subtitle Automatically make your forms private, when you decide
-
-        h3.step-title 🙋‍♀️Login to your account to select a form
-        .step-content.padded
-          p.step-description Your Typeform email address will be stored to identify you, but in encrypted form, so it cannot be read or used for marketing purposes
-          button.btn.js-authenticate-btn Connect with Typeform
-
-      section.step.step-2.disabled
-        h3.step-title 🗓 Manage schedules
-        .step-content
-          .js-scheduler
+    div#root
 
     script(src='/main.js')

@@ -36,10 +36,12 @@ export async function openOAuthWindow () {
 
     window.addEventListener('message', (message) => {
       const token = message.data
-      oauthWindow.close()
-      oauthWindow = null
-      localStorage.setItem('token', token)
-      resolve(token)
+      if (token.indexOf('TOKEN') !== -1) {
+        oauthWindow.close()
+        oauthWindow = null
+        localStorage.setItem('token', token.replace('TOKEN', ''))
+        resolve(token)
+      }
     })
   })
 }
