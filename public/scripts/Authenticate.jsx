@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styled from 'react-emotion'
+import styled, { css } from 'react-emotion'
 import { openOAuthWindow } from './api-lib'
 import LoadingButton from './LoadingButton'
 
@@ -9,7 +9,7 @@ const Link = styled('button')`
   -webkit-appearance: none;
   color: ${props => props.red ? '#dc0d0d' : '#4399fa'};
   font-weight: bold;
-  text-decoration: underline;
+  text-decoration: none;
   padding: 0;
   font-size: 16px;
   line-height: 32px;
@@ -53,8 +53,8 @@ class Authenticate extends React.Component {
               Your Typeform email address is stored to identify you,
               but in encrypted form, so it cannot be read or used for marketing purposes
             </p>
-            <Link>Log out</Link>
-            <Link red>Delete all my data</Link>
+            <Link>🚪 Log out</Link>
+            <Link red>🗑 Delete all my data</Link>
           </div>
         </div>
       )
