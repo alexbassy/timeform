@@ -25,8 +25,10 @@ const states = css`
 export const Input = styled('input')`
   font-size: 16px;
   padding: 6px 12px;
+  margin: 8px 4px;
+  height: 32px;
   border: none;
-  background: none;
+  background: #00000010;
   border-radius: 6px;
   -webkit-appearance: none;
   user-select: none;
@@ -39,8 +41,9 @@ export const Input = styled('input')`
 export const Select = styled('select')`
   font-size: 16px;
   padding: 6px 32px 6px 12px;
-  margin: 8px 0;
-  background: no-repeat center right 8px/20px url("data:image/svg+xml;utf8,${dropdownArrow}");
+  margin: 8px 4px;
+  height: 32px;
+  background: #00000010 no-repeat center right 8px/20px url("data:image/svg+xml;utf8,${dropdownArrow}");
   border: none;
   border-radius: 6px;
   -webkit-appearance: none;

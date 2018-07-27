@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'react-emotion'
 import moment from 'moment'
-import DatePicker, { DATE_TIME_FORMAT } from './DatePicker'
+import WeekTimePicker from './WeekTimePicker'
 import { Label, Select, Button } from './FormElements'
 import { saveRule } from './api-lib'
 
@@ -19,6 +19,8 @@ const FormInputWrap = styled('div')`
 const ScheduleView = styled('div')`
   flex: 1;
   padding: 0 16px;
+  height: 100%;
+  overflow: auto;
 `
 
 const Preview = styled('div')`
@@ -57,35 +59,15 @@ class Scheduler extends Component {
     this.changeCondition = this.changeCondition.bind(this)
     this.changeFrequency = this.changeFrequency.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.state = {
-      startDate: moment(),
-      endDate: moment().add(1, 'day'),
-      condition: 'private',
-      frequency: 'weekly'
-    }
+    this.state = {}
   }
 
-  componentWillMount () {
-    const form = this.props.form
-
-    if (!form || !form.rule) {
-      return
-    }
-
-    this.setState({
-      startDate: moment(form.rule.begin),
-      endDate: moment(form.rule.end),
-      condition: form.rule.condition,
-      frequency: form.rule.recurring
-    })
+  handleStartDateChange (time) {
+    this.setState({ startDate: time })
   }
 
-  handleStartDateChange (m) {
-    this.setState({ startDate: m })
-  }
-
-  handleEndDateChange (m) {
-    this.setState({ endDate: m })
+  handleEndDateChange (time) {
+    this.setState({ endDate: time })
   }
 
   changeCondition (ev) {
@@ -94,6 +76,10 @@ class Scheduler extends Component {
 
   changeFrequency (ev) {
     this.setState({ frequency: ev.target.value })
+  }
+
+  onEnableOrDisable (ev) {
+    this.setState({ enabled: ev.target.value })
   }
 
   async handleSubmit (ev) {
@@ -140,22 +126,30 @@ class Scheduler extends Component {
             </Select>
           </FormGroup>
           <FormGroup title='Start time'>
-            <DatePicker
-              selected={this.state.startDate}
+            <WeekTimePicker
+              value={this.state.startDate}
               onChange={this.handleStartDateChange}
             />
           </FormGroup>
           <FormGroup title='End time'>
-            <DatePicker
-              selected={this.state.endDate}
+            <WeekTimePicker
+              value={this.state.endDate}
               onChange={this.handleEndDateChange}
+            />
+          </FormGroup>
+          <FormGroup title='Enabled'>
+            <input
+              name='enabled'
+              type='checkbox'
+              defaultChecked={this.state.enabled}
+              onChange={this.onEnableOrDisable}
             />
           </FormGroup>
           <Preview>
             <div>
               <strong>{form.title}</strong> will be set
-              to <strong>{this.state.condition}</strong> on <strong>{this.state.startDate.format(DATE_TIME_FORMAT)}</strong> and
-              made <strong>{this.state.condition === 'public' ? 'private' : 'public'}</strong> on <strong>{this.state.endDate.format(DATE_TIME_FORMAT)}</strong>
+              to <strong>{this.state.condition}</strong> on <strong>{this.state.startDate.format('dddd[s at] HH:mm')}</strong> and
+              made <strong>{this.state.condition === 'public' ? 'private' : 'public'}</strong> on <strong>{this.state.endDate.format('dddd[s at] HH:mm')}</strong>
             </div>
           </Preview>
           <Button type='submit'>
@@ -165,6 +159,35 @@ class Scheduler extends Component {
       </ScheduleView>
     )
   }
+}
+
+Scheduler.getDerivedStateFromProps = (props, state) => {
+  // component is mounted for the first time
+  const rule = props.form && props.form.rule
+  if (rule && props.form.id !== state.formId) {
+    return {
+      formId: props.form.id,
+      startDate: moment(rule.begin),
+      endDate: moment(rule.end),
+      condition: rule.condition,
+      frequency: rule.recurring,
+      enabled: rule.enabled
+    }
+  }
+
+  // component is updated with new form
+  if (props.form.id !== state.formId) {
+    return {
+      formId: props.form.id,
+      startDate: moment(),
+      endDate: moment().add(1, 'day'),
+      condition: 'private',
+      frequency: 'weekly',
+      enabled: true
+    }
+  }
+
+  return null
 }
 
 export default Scheduler
