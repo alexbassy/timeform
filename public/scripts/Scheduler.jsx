@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import styled from 'react-emotion'
 import moment from 'moment'
 import WeekTimePicker from './WeekTimePicker'
-import { Label, Select, Button } from './FormElements'
+import { Label, Select } from './FormElements'
+import LoadingButton from './LoadingButton'
 import { saveRule } from './api-lib'
 
 const FormGroupWrap = styled('div')`
@@ -58,40 +59,53 @@ class Scheduler extends Component {
     this.handleEndDateChange = this.handleEndDateChange.bind(this)
     this.changeCondition = this.changeCondition.bind(this)
     this.changeFrequency = this.changeFrequency.bind(this)
+    this.onEnableOrDisable = this.onEnableOrDisable.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.state = {}
   }
 
   handleStartDateChange (time) {
-    this.setState({ startDate: time })
+    this.setState({ hasModified: true, startDate: time })
   }
 
   handleEndDateChange (time) {
-    this.setState({ endDate: time })
+    this.setState({ hasModified: true, endDate: time })
   }
 
   changeCondition (ev) {
-    this.setState({ condition: ev.target.value })
+    this.setState({ hasModified: true, condition: ev.target.value })
   }
 
   changeFrequency (ev) {
-    this.setState({ frequency: ev.target.value })
+    this.setState({ hasModified: true, frequency: ev.target.value })
   }
 
   onEnableOrDisable (ev) {
-    this.setState({ enabled: ev.target.value })
+    this.setState({ hasModified: true, enabled: ev.target.value })
   }
 
   async handleSubmit (ev) {
     ev.preventDefault()
+
+    this.setState({
+      isLoading: true
+    })
+
     const body = {
       condition: this.state.condition,
       frequency: this.state.frequency,
       begin: this.state.startDate.toDate(),
       end: this.state.endDate.toDate()
     }
+
     const res = await saveRule(this.props.form.id, body)
-    console.log(res)
+
+    if (res) {
+      setTimeout(() => this.setState({
+        isLoading: false,
+        hasModified: false
+      }), 500)
+    }
   }
 
   render () {
@@ -152,9 +166,13 @@ class Scheduler extends Component {
               made <strong>{this.state.condition === 'public' ? 'private' : 'public'}</strong> on <strong>{this.state.endDate.format('dddd[s at] HH:mm')}</strong>
             </div>
           </Preview>
-          <Button type='submit'>
+          <LoadingButton
+            type='submit'
+            disabled={!this.state.hasModified}
+            isLoading={this.state.isLoading}
+          >
             👌 Save changes
-          </Button>
+          </LoadingButton>
         </form>
       </ScheduleView>
     )
@@ -171,7 +189,8 @@ Scheduler.getDerivedStateFromProps = (props, state) => {
       endDate: moment(rule.end),
       condition: rule.condition,
       frequency: rule.recurring,
-      enabled: rule.enabled
+      enabled: rule.enabled,
+      hasModified: false
     }
   }
 
@@ -183,7 +202,8 @@ Scheduler.getDerivedStateFromProps = (props, state) => {
       endDate: moment().add(1, 'day'),
       condition: 'private',
       frequency: 'weekly',
-      enabled: true
+      enabled: true,
+      hasModified: false
     }
   }
 

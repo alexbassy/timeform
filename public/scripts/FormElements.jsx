@@ -58,10 +58,17 @@ export const Button = styled('button')`
   color: #fff;
   padding: 16px 24px;
   border: 0;
+  height: 52px;
+  min-width: 100px;
   border-radius: 4px;
   font-weight: bold;
   cursor: pointer;
   transition: filter .25s ease;
+  
+  &[disabled] {
+    background-image: linear-gradient(150deg, #bbb, #d4d4d4);
+    color: #f2f2f2;
+  }
   
   &:active, 
   &:focus {

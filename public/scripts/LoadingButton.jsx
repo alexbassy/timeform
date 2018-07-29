@@ -1,5 +1,7 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Spin from 'spin'
+import { Button } from './FormElements'
 
 class LoadingButton extends React.PureComponent {
   constructor (props) {
@@ -22,7 +24,7 @@ class LoadingButton extends React.PureComponent {
       className: 'spinner',
       shadow: '',
       position: 'relative'
-    }, this.props.options)
+    }, this.props.spinnerOptions)
 
     this.spinner = new Spin(opts)
   }
@@ -43,17 +45,26 @@ class LoadingButton extends React.PureComponent {
 
   render () {
     return (
-      <button {...this.props}>
+      <Button
+        disabled={this.props.disabled || this.props.isLoading}
+        {...this.props}
+      >
         {this.props.isLoading
           ? <div className='spinner' ref={this.elem} />
           : this.props.children}
-      </button>
+      </Button>
     )
   }
 }
 
 LoadingButton.defaultProps = {
-  options: {}
+  spinnerOptions: {}
+}
+
+LoadingButton.propTypes = {
+  children: PropTypes.node,
+  isLoading: PropTypes.bool,
+  spinnerOptions: PropTypes.object
 }
 
 export default LoadingButton

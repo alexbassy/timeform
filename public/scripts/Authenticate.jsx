@@ -73,7 +73,6 @@ class Authenticate extends React.Component {
           <LoadingButton
             className='btn'
             onClick={this.handleButtonClick}
-            disabled={this.state.isLoading}
             isLoading={this.state.isLoading}
           >
             Connect with Typeform
