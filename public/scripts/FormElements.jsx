@@ -12,13 +12,14 @@ export const Label = styled('label')`
 
 const states = css`
   &[disabled] {
-    background-color: #00000010;
+    background-color: #00000005;
   }
   
   &.is-focused,
   &:focus {
     outline: none;
-    background-color: #00000010
+    background-color: #00000010;
+    box-shadow: 0 0 0 2px #4399fa50;
   }
 `
 
@@ -32,7 +33,7 @@ export const Input = styled('input')`
   border-radius: 6px;
   -webkit-appearance: none;
   user-select: none;
-  transition: background-color .15s ease;
+  transition: background-color .15s ease, box-shadow.15s ease;
   text-align: ${props => props.textAlign || 'left'};
   
   ${states}
@@ -63,7 +64,7 @@ export const Button = styled('button')`
   border-radius: 4px;
   font-weight: bold;
   cursor: pointer;
-  transition: filter .25s ease;
+  transition: box-shadow .25s ease;
   
   &[disabled] {
     background-image: linear-gradient(150deg, #bbb, #d4d4d4);
@@ -73,5 +74,6 @@ export const Button = styled('button')`
   &:active, 
   &:focus {
     outline: none;
+    box-shadow: 0 0 0 4px #4399fa60;
   }
 `
