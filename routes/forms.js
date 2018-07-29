@@ -40,22 +40,28 @@ router.get('/:id', async (req, res) => {
 
 router.post('/rule/:id', async (req, res) => {
   const accountId = req.user._id
-  const { frequency, condition, begin, end } = req.body
-  const rule = new Rule({
-    formId: req.params.id,
-    accountId: accountId,
-    enabled: true,
-    condition: condition,
-    recurring: frequency,
-    begin: begin,
-    end: end
-  })
-  rule.save(err => {
-    if (err) {
-      return res.status(400).json(err)
-    }
-    res.status(201).json(rule)
-  })
+  const { frequency, condition, begin, end, enabled } = req.body
+  try {
+    const rule = await Rule.findOneAndUpdate({
+      formId: req.params.id,
+    }, {
+      formId: req.params.id,
+      accountId: accountId,
+      enabled: enabled,
+      condition: condition,
+      recurring: frequency,
+      begin: begin,
+      end: end
+    }, {
+      upsert: true,
+      new: true,
+      setDefaultsOnInsert: true,
+      lean: true
+    })
+    return res.status(201).json(rule)
+  } catch (err) {
+    return res.status(400).json(err)
+  }
 })
 
 module.exports = router

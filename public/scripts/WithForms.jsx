@@ -35,9 +35,8 @@ class WithForms extends Component {
       position: 'relative'
     })
     this.spinner.spin(this.loadingContainer.current)
-    // const forms = await getForms()
-    // console.log(forms)
-    this.setState({ forms: cached })
+    const forms = await getForms()
+    this.setState({ forms })
   }
 
   componentWillUnmount () {
