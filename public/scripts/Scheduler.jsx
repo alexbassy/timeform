@@ -19,7 +19,7 @@ const FormInputWrap = styled('div')`
 
 const ScheduleView = styled('div')`
   flex: 1;
-  padding: 0 16px 16px;
+  padding: 8px 16px 16px;
   height: 100%;
   overflow: auto;
 `
